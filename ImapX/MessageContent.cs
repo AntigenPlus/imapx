@@ -219,15 +219,15 @@ namespace ImapX
                             if (ContentDisposition == null)
                                 ContentDisposition = new ContentDisposition();
 
-                            ContentDisposition.DispositionType = DispositionTypeNames.Inline;
+                            ContentDisposition.DispositionType = String.IsNullOrEmpty(ContentDisposition.FileName) ? DispositionTypeNames.Inline : DispositionTypeNames.Attachment;
 
-                            ContentId = value.Trim(' ', '<', '>');
+                        ContentId = value.Trim(' ', '<', '>');
                             break;
                         case "content-disposition":
                             if (ContentDisposition == null)
                                 ContentDisposition = new ContentDisposition(value);
 
-                            if (!string.IsNullOrEmpty(ContentId))
+                            if (!string.IsNullOrEmpty(ContentId) && string.IsNullOrEmpty(ContentDisposition.FileName))
                                 ContentDisposition.DispositionType = DispositionTypeNames.Inline;
 
                             break;
